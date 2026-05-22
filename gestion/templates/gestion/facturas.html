@@ -15,7 +15,6 @@
         <th>Impuesto</th>
         <th>Total</th>
         <th>Método de pago</th>
-        <th>Acciones</th>
     </tr>
     {% for factura in facturas %}
     <tr>
@@ -26,14 +25,6 @@
         <td>${{ factura.impuesto }}</td>
         <td>${{ factura.total_factura }}</td>
         <td>{{ factura.metodo_pago }}</td>
-        <td>
-            <a href="/facturas/editar/{{ factura.id }}/">
-                <button>Editar</button>
-            </a>
-            <a href="/facturas/eliminar/{{ factura.id }}/">
-                <button>Eliminar</button>
-            </a>
-        </td>
     </tr>
     {% endfor %}
 </table>

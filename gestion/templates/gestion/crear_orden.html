@@ -5,7 +5,48 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Guardar</button>
+
+        <h3 style="color:#ff4d4d; margin: 20px 0 10px;">Platos</h3>
+
+        {{ formset.management_form }}
+        <div id="formset-container">
+            {% for detalle_form in formset %}
+            <div class="detalle-form">
+                <p>
+                    <label>Plato:</label>
+                    {{ detalle_form.plato }}
+                </p>
+                <p>
+                    <label>Cantidad:</label>
+                    {{ detalle_form.cantidad }}
+                </p>
+                {{ detalle_form.id }}
+                <hr style="border-color:#333; margin: 10px 0;">
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" onclick="agregarPlato()" style="background:#333; margin-bottom:20px;">
+            + Agregar otro plato
+        </button>
+        <br>
+        <button type="submit">Guardar Orden</button>
     </form>
 </div>
+
+<script>
+    let formCount = {{ formset.total_form_count }};
+    function agregarPlato() {
+        const container = document.getElementById('formset-container');
+        const totalForms = document.getElementById('id_detalles-TOTAL_FORMS');
+        const newForm = container.children[0].cloneNode(true);
+        newForm.innerHTML = newForm.innerHTML.replace(/detalles-0-/g, `detalles-${formCount}-`);
+        newForm.innerHTML = newForm.innerHTML.replace(/detalles-0]/g, `detalles-${formCount}]`);
+        newForm.querySelectorAll('input[type=number]').forEach(i => i.value = 1);
+        newForm.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+        container.appendChild(newForm);
+        formCount++;
+        totalForms.value = formCount;
+    }
+</script>
 {% endblock %}

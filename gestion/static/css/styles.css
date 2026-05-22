@@ -236,3 +236,35 @@ label {
     cursor: pointer;
     margin-top: 5px;
 }
+
+.mensaje-error {
+    background-color: #8B0000;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.eliminar-plato {
+    margin-top: 10px;
+}
+
+.eliminar-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-weight: bold;
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #8B0000;
+    transition: 0.2s;
+}
+
+.eliminar-label:hover {
+    background-color: #8B0000;
+    color: white;
+}

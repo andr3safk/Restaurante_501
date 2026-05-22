@@ -43,6 +43,15 @@
 </nav>
 
     <div class="contenedor">
+        {% if messages %}
+        {% for message in messages %}
+        
+        <div class="mensaje-error">
+            {{ message }}
+        </div>
+
+        {% endfor %}
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>
