@@ -138,3 +138,5 @@ class FacturaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['orden'].queryset = Orden.objects.filter(factura__isnull=True)
+
+#cambios prueba
