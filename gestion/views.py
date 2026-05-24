@@ -4,6 +4,9 @@ from django.contrib.auth import login
 from django.contrib import messages
 from decimal import Decimal
 from .forms import RegistroForm, ClienteForm, EmpleadoForm, MesaForm, PlatoForm, OrdenForm, FacturaForm, DetalleOrdenFormSet
+from .forms import RegistroForm, ClienteForm
+
+# Create your views here.
 from .models import Cliente, Empleado, Mesa, Plato, Orden, Factura
 
 
@@ -271,3 +274,77 @@ def editar_factura(request, id):
 def eliminar_factura(request, id):
     messages.error(request, 'Las facturas no se pueden eliminar.')
     return redirect('/facturas/')
+def registro(request):
+
+    if request.method == 'POST':
+
+        form = RegistroForm(request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            login(request, user)
+
+            return redirect('/')
+
+    else:
+
+        form = RegistroForm()
+
+    return render(request, 'gestion/registro.html', {
+        'form': form
+    })
+
+@login_required
+def crear_cliente(request):
+
+    if request.method == 'POST':
+
+        form = ClienteForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/clientes/')
+
+    else:
+
+        form = ClienteForm()
+
+    return render(request, 'gestion/crear_cliente.html', {
+        'form': form
+    })
+
+@login_required
+def editar_cliente(request, id):
+
+    cliente = get_object_or_404(Cliente, id=id)
+
+    if request.method == 'POST':
+
+        form = ClienteForm(request.POST, instance=cliente)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/clientes/')
+
+    else:
+
+        form = ClienteForm(instance=cliente)
+
+    return render(request, 'gestion/editar_cliente.html', {
+        'form': form
+    })
+
+@login_required
+def eliminar_cliente(request, id):
+
+    cliente = get_object_or_404(Cliente, id=id)
+
+    cliente.delete()
+
+    return redirect('/clientes/')
